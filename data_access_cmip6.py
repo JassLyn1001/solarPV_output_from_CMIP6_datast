@@ -3,7 +3,6 @@ from pyesgf.search import SearchContext
 import os
 import pandas as pd
 import requests
-import urllib3, socket
 
 # --- Access CMIP6 data using esgf-pyclient
 # https://esgf-node.llnl.gov/search/cmip6/ --> gives results from more data nodes
@@ -72,23 +71,23 @@ df = pd.DataFrame(urls, columns = ["Links"])
 # Thus, we can drop any models with incomplete variables and outside of our time peirod
 
 # First, let save all of the resulted links to a text file
-ff = open(f"/Users/jasslyn/my_data/Graduate_Thesis/data/data/{variable[0]}",'w')
+ff = open(f"your/path/{variable[0]}",'w')
 for i in df.Links:
     ff.write(i+'\n')# opening a txt file and saving into it.
 ff.close()
 
-# Second, creat a backup list for the links
+# Second, create a backup list for the links
 df_backup=[]
-f = open(f"/Users/jasslyn/my_data/Graduate_Thesis/data/data/{variable[0]}","r")
+f = open(f"your/path/{variable[0]}","r")
 for line in f:
     stripped_line = line.strip()
     line_list = stripped_line.split()
     df_backup.append(stripped_line) # opening that txt file and appending to df_backup
 f.close()
 
-# Now, let's define our time period in order to avoide downloading some years 
-# outside of our timeperiod
-min_period=19800101 # 198001010130 for hourly data
+# Now, let's define our time period in order to avoid downloading some years 
+# outside of our time period
+min_period=19800101 # timestemp for daily data
 max_period=20141231 # 
 
 # Create a new list 
@@ -98,7 +97,7 @@ kk = len(df_backup)
 for url in df_backup:
     fname = url.split('/')[-1] # splitting file name from url
     try: # avoid any ValueError from file name
-        yr_min = int(fname.split('_')[-1].split('-')[0]) #;print(yr_min) # split timeperiod of nc file
+        yr_min = int(fname.split('_')[-1].split('-')[0]) #;print(yr_min) # split time period of netcdf file
         yr_max = int(fname.split('_')[-1].split('-')[-1].split('.')[0])  #;print(yr_max)       
     except ValueError:
         pass
@@ -106,28 +105,11 @@ for url in df_backup:
             new_list.append(url) # appending to the new_list  
     else:
         print(yr_min,' to ',yr_max)
-# print(new_list)
+
 new_list
 
 # Save the new list to a new data frame
 df_urls = pd.DataFrame(new_list, columns = ["Links"])
-df_urls.to_excel(f"/Users/jasslyn/my_data/Graduate_Thesis/data/data/{variable[0]}.xlsx")
+df_urls.to_excel(f"your/path/{variable[0]}.xlsx")
 
-# Sedang dicek --- berhasil dengan response 200
-#Initialising an empty list that will be used to store the extracted URLs
-urls = [] 
-dataset = query.search(ignore_facet_check=True)[2] # This open a dataset 
-files_list = dataset.file_context().search()
-urls.append(files_list[0].download_url) # 
-response = requests.get(urls[0], stream = True)
-
-filename = str(urls[0].rsplit("/", 1)[-1])
-file_output = "/Users/jasslyn/my_data/Graduate_Thesis/data/data/"
-
-if response.status_code == 200:
-    with open (file_output+filename, 'wb') as f:
-        for chunk in response.iter_content(chunk_size=1024):
-            f.write(chunk)
-    print (f"Data successfuly downloaded : {filename}")
-else:
-    print (f"Download failed for {filename}. Status code: {response.status_code}")
+# This is END of the code
