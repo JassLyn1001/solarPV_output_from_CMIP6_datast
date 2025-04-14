@@ -1,5 +1,7 @@
 # Climate_change_impact_in_solarPV_output
+This project is written to complete my thesis final defense.  I am still working on it, so there must be any update for codes as well as the analysis. If you  guys are interested, any question or insight will be a great help. Feel free to interact in the comment. 
 
+In this project, I'm working with CMIP6 dataset (such as rsds, rsdt, tas, etc) to analyze solar PV output over my home country Indonesia. A deep learning model will be used to produce high-resolution daily solar radiation data for historical and future period. 
 
 ## Data Collection
 - Reference data
