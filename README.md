@@ -10,12 +10,15 @@ In this project, I'm working with CMIP6 dataset (such as rsds, rsdt, tas, etc) t
 
 ## Data Processing
 - Clearness index calculation
-- Daylight hours
-
+- Daylight hours estimation
+- Bias-correction techniques for daily surface solar radiation and daytime near-surface temperature
+- Solar Photovoltaic (PV) power estimation (historical & future)
+ 
 
 ## Data Analysis
-- Solar PV output in historical period
-- Future Solar PV output under changing climate
+- Evaluate model performance in the baseline period
+- Calculate Future Changes in PV energy potential
+- Perform a trend analysis
 
 
 ## Findings & Discussions
